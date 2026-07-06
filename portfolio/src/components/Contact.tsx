@@ -28,7 +28,7 @@ export default function Contact() {
         >
           say something.
           <br />
-          <a href="mailto:hello@chinmay.dev" className="text-accent hover:text-ink transition-colors duration-300 underline decoration-1 underline-offset-8 break-all sm:break-normal">
+          <a href="mailto:chinmaysingh285@gmail.com" className="text-accent hover:text-ink transition-colors duration-300 underline decoration-1 underline-offset-8 break-all sm:break-normal">
             chinmaysingh285@gmail.com
           </a>
         </motion.h2>
