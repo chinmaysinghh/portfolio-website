@@ -24,14 +24,11 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="font-display text-4xl md:text-7xl leading-[1.05] tracking-tight lowercase text-ink"
+          className="font-display text-3xl sm:text-4xl md:text-7xl leading-[1.05] tracking-tight lowercase text-ink break-words"
         >
           say something.
           <br />
-          <a
-            href="mailto:hello@chinmay.dev"
-            className="text-accent hover:text-ink transition-colors duration-300 underline decoration-1 underline-offset-8"
-          >
+          <a href="mailto:hello@chinmay.dev" className="text-accent hover:text-ink transition-colors duration-300 underline decoration-1 underline-offset-8 break-all sm:break-normal">
             chinmaysingh285@gmail.com
           </a>
         </motion.h2>

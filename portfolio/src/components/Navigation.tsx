@@ -75,6 +75,8 @@ function DockItem({
         onPointerCancel={() => setHovered(false)}
         onClick={(event) => {
           event.preventDefault();
+          setHovered(false);
+          mouseX.set(Infinity);
           onActivate(href);
         }}
         style={{ scale, y }}
@@ -131,9 +133,8 @@ export default function Navigation() {
   const handleDockPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     mouseX.set(event.clientX);
 
-    if (event.pointerType === "mouse" || !pointerState.current.active) {
-      return;
-    }
+    if (event.pointerType === "mouse") return;
+    if (!pointerState.current.active) return;
 
     const target = document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null;
     const link = target?.closest("a[data-dock-href]") as HTMLAnchorElement | null;
@@ -194,8 +195,7 @@ export default function Navigation() {
       className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50"
     >
       <div
-        onMouseMove={(e) => mouseX.set(e.clientX)}
-        onMouseLeave={resetDockPointerState}
+        onPointerLeave={resetDockPointerState}
         onPointerDown={handleDockPointerDown}
         onPointerMove={handleDockPointerMove}
         onPointerUp={resetDockPointerState}
