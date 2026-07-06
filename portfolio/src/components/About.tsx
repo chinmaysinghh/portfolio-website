@@ -3,11 +3,11 @@
 import { motion } from "framer-motion";
 
 const stamps = [
-  { label: "based in", value: "Gandhinagar, IN" },
-  { label: "role", value: "AI Engineer / Frontend" },
+  { label: "based in", value: "Ahmedabad, IN" },
+  { label: "role", value: " Software Developer / AI Engineer" },
   { label: "studying", value: "M.Tech AI, 2025–27" },
-  { label: "roll no.", value: "25MAI002" },
-  { label: "status", value: "Building, always" },
+  
+  
 ];
 
 export default function About() {
@@ -50,13 +50,8 @@ export default function About() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="mt-12 space-y-5 text-ink-dim leading-relaxed text-[15px] md:text-base max-w-xl"
           >
-            <p>
-              I'm an M.Tech Artificial Intelligence student at Pandit
-              Deendayal Energy University, Gandhinagar, working part-time as
-              a software engineer alongside my degree. That split shapes how
-              I work — comfortable in a codebase shipping product, equally
-              at home in a notebook running ablations on a transformer that
-              won't stop overfitting.
+            {/* <p>
+              I am presently pursuing my M.Tech in Artificial Intelligence from Pandit Deendayal Energy University while working as a Software Development Engineer. I love coming up with innovative solutions to solve practical issues and researching about ideas which will shape the future of artificial intelligence. From scaling web applications to enhancing user experience and experimenting with deep learning, I am constantly driven by my passion for learning more. Apart from all this, I love night drives, discovering new places, and anything and everything that has to do with cars.
             </p>
             <p>
               My research lives in wearable sensing and medical imaging:
@@ -69,14 +64,14 @@ export default function About() {
             <p>
               Outside of both: cars, late-night driving, and the kind of
               quiet that makes hard problems easier to think through.
-            </p>
+            </p> */}
           </motion.div>
         </div>
 
         {/* Digital passport stamps, right column */}
         <div className="md:col-span-3 md:pl-6 md:border-l" style={{ borderColor: "rgba(243,239,230,0.08)" }}>
           <p className="font-mono text-xs text-ink-faint uppercase tracking-[0.2em] mb-6">
-            Digital Passport
+            At a Glance
           </p>
           <div className="space-y-5">
             {stamps.map((s, i) => (

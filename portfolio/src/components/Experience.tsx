@@ -6,27 +6,21 @@ import { motion, useScroll, useSpring } from "framer-motion";
 const log = [
   {
     tag: "current",
-    role: "Software Engineer (Part-time)",
+    role: "Software Development Engineer (Part-Time)",
+    company: "Guru Software",
+    period: "Jul 2025 — Present",
+    place: "Ahmedabad, Gujarat",
     detail:
-      "Building and maintaining product features while completing an M.Tech in AI — shipping frontend and full-stack work on a schedule split around research and coursework.",
+      "Assisting in building core modules of a Jewellery CRM system by improving UI workflows, fixing critical bugs, and enhancing module stability. Developing functional features such as inventory tracking, pricing updates, and product/category mappings, and collaborating with senior developers to refine business logic and optimize API interactions between frontend and backend.",
   },
   {
-    tag: "research",
-    role: "Sleep Stage Classification, MESA Dataset",
+    tag: "internship",
+    role: "Software Development Intern",
+    company: "Guru Software",
+    period: "Jan 2025 — Jul 2025",
+    place: "Ahmedabad, Gujarat",
     detail:
-      "Designed and compared a CNN-LSTM baseline against a custom SleepTransformer for 4-class sleep stage prediction from wrist-worn actigraphy and heart rate signals. The transformer improved substantially over baseline, with overfitting and class imbalance as open problems.",
-  },
-  {
-    tag: "conference",
-    role: "MBCC 2026, IIT Mandi",
-    detail:
-      "Presented a review paper on AI-driven brain tumor segmentation — covering SVMs, CNNs, U-Net, and transformer architectures — co-authored with Kush Vaidya and Deval Bhavsar, guided by Dr. Santosh Satapathy.",
-  },
-  {
-    tag: "coursework",
-    role: "Applied ML & Explainability Labs",
-    detail:
-      "Explainable AI work using SHAP on an EEG seizure dataset, plus presentations on U-KAN, MedSAMix, and MedSMILE for medical image segmentation coursework.",
+      "Developed and integrated responsive UI components using React.js and Bootstrap for a web-based Jewellery CRM system, enhancing usability and cross-device compatibility. Implemented secure API integration with JWT authentication for real-time data exchange, and designed modules for inventory, billing, and customer management.",
   },
 ];
 
@@ -62,7 +56,7 @@ export default function Experience() {
           <div className="space-y-16 md:-mt-1">
             {log.map((entry, i) => (
               <motion.div
-                key={entry.role}
+                key={entry.role + entry.period}
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
@@ -73,9 +67,17 @@ export default function Experience() {
                   {entry.tag}
                 </p>
                 <div>
-                  <h3 className="font-display text-xl md:text-2xl text-ink mb-2 tracking-tight">
-                    {entry.role}
-                  </h3>
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+                    <h3 className="font-display text-xl md:text-2xl text-ink tracking-tight">
+                      {entry.role}
+                    </h3>
+                    <p className="font-mono text-[11px] text-ink-faint uppercase tracking-widest whitespace-nowrap">
+                      {entry.period}
+                    </p>
+                  </div>
+                  <p className="text-xs text-ink-faint uppercase tracking-wide mb-3">
+                    {entry.company} · {entry.place}
+                  </p>
                   <p className="text-ink-dim leading-relaxed text-[15px] max-w-xl">
                     {entry.detail}
                   </p>

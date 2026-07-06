@@ -16,7 +16,7 @@ const journey: EducationEntry[] = [
     year: "2025 — 2027",
     title: "M.Tech, Artificial Intelligence",
     place: "Pandit Deendayal Energy University, Gandhinagar",
-    grade: "CGPA — /10",       // TODO: replace with your actual CGPA
+    grade: "CGPA — 7.75/10",       // TODO: replace with your actual CGPA
     gradeLabel: "current cgpa",
     tags: ["Deep Learning", "Explainable AI", "Time Series", "Research Methodology"],
   },
@@ -24,7 +24,7 @@ const journey: EducationEntry[] = [
     year: "2021 — 2025",
     title: "B.Tech, Computer Engineering", // TODO: confirm exact degree title
     place: "Engineering, pre-M.Tech",       // TODO: replace with your university name
-    grade: "CGPA — /10",                    // TODO: replace with your actual CGPA
+    grade: "CGPA — 8.24/10",                    // TODO: replace with your actual CGPA
     gradeLabel: "final cgpa",
     tags: ["Programming Fundamentals", "Systems Thinking", "Machine Learning"],
   },
@@ -46,7 +46,7 @@ export default function Education() {
             viewport={{ once: true }}
             transition={{ duration: 1.2, ease: "easeInOut" }}
             style={{ transformOrigin: "top" }}
-            className="absolute left-4 md:left-6 top-2 bottom-2 w-px bg-gradient-to-b from-accent via-accent-dim to-transparent"
+            className="absolute left-4 md:left-6 top-2 bottom-2 w-px bg-linear-to-b from-accent via-accent-dim to-transparent"
           />
 
           <div className="space-y-20">

@@ -1,81 +1,153 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Link from "next/link";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Milestone = {
   title: string;
   place: string;
   note: string;
-  image?: string; // photo, screenshot, or figure representing the achievement
-  rotate: number;
+  date?: string;
+  link?: string;
+  images?: string[];
 };
 
 const milestones: Milestone[] = [
   {
     title: "Presented at MBCC 2026",
     place: "IIT Mandi",
+    date: "June 2026",
     note: "Delivered a review paper on AI-driven brain tumor segmentation to a national research audience.",
-    image: undefined,
-    rotate: -3,
+    images: ["/images/chinmay-iitmandi.jpg"],
   },
   {
-    title: "SleepTransformer outperformed baseline",
-    place: "MESA Dataset research",
-    note: "Substantial accuracy gains over a CNN-LSTM baseline on 4-class sleep stage prediction.",
-    image: undefined,
-    rotate: 2,
+    title: "Google Cloud Facilitator Program",
+    place: "Google Cloud",
+    date: "September 2022",
+    link: "https://www.skills.google/public_profiles/e06b333f-912a-4704-aa05-b97ab0de4230", // TODO: replace with actual link
+    note: "Achieved the Ultimate Milestone by completing 40 quests and earning 20 skill badges. Received exclusive access to the Google Career Readiness Program.",
+    images: ["/images/chinmay-google-facilitator.jpg"], // TODO: add image path(s), e.g. "/images/gcloud-facilitator.jpg"
   },
   {
-    title: "Two research papers in parallel with full-time coursework",
-    place: "M.Tech + part-time SWE role",
-    note: "Brain tumor segmentation review and automotive predictive maintenance study, alongside a part-time software engineering role.",
-    image: undefined,
-    rotate: -2,
+    title: "Google Cloud Arcade",
+    place: "Google Cloud",
+    date: "August 2023",
+    link: "https://www.skills.google/public_profiles/5652d001-5796-43c9-b35d-f08196962b7a", // TODO: replace with actual link
+    note: "Demonstrated proficiency in cloud technologies and problem-solving through successful participation in interactive challenges within Google Cloud Arcade.",
+    images: ["/images/chinmay-google-arcade.png"], // TODO: add image path(s), e.g. "/images/google-cloud-arcade.jpg"
   },
   {
-    title: "Built a research pipeline end to end",
-    place: "Signal acquisition → XAI → clinical validation",
-    note: "Diagrammed and implemented a full multimodal pipeline, not just a model — acquisition, preprocessing, modeling, explainability, and validation.",
-    image: undefined,
-    rotate: 3,
+    title: "Architecting with Google Compute Engine — Coursera",
+    place: "Google Cloud Education",
+    date: "June 2022",
+    link: "https://coursera.org/share/cc981bb9319f81167c2c7db6fa794006", // TODO: replace with actual link
+    note: "Completed a comprehensive five-course specialization offered by Google Cloud Education with a perfect 100% score across all courses.",
+    images: ["/images/chinmay-coursera-certificate.png"], // TODO: add image path(s), e.g. "/images/coursera-certificate.jpg"
+  },
+  {
+    title: "Paper accepted — AI-Aided Predictive Maintenance in Automotive Systems",
+    place: "SVNIT, Surat",
+    date: "September 2026",
+    note: "A comparative review of AI and ML techniques including K-Means clustering, KNN, and autoencoders  for predictive maintenance and fault detection in automotive systems. Accepted for presentation.",
+    images: ["/images/chinmay-svnit-paper.png"], // TODO: add image path(s) once you have a photo/screenshot for this
   },
 ];
 
-function MilestonePin({ rotate }: { rotate: number }) {
+function ImagePane({ images, title }: { images: string[]; title: string }) {
+  const [index, setIndex] = useState(0);
+
+  const go = (dir: 1 | -1, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIndex((prev) => (prev + dir + images.length) % images.length);
+  };
+
   return (
-    <div
-      className="absolute -top-4 left-1/2 -translate-x-1/2 flex flex-col items-center"
-      style={{ transform: `translateX(-50%) rotate(${-rotate}deg)` }}
-    >
-      <span className="w-1.5 h-1.5 rounded-full bg-accent/70" />
-      <span className="w-px h-3" style={{ background: "rgba(243,239,230,0.2)" }} />
+    <div className="relative flex items-center justify-center bg-[rgba(243,239,230,0.02)] border border-[rgba(243,239,230,0.1)] p-4 md:p-6 min-h-70">
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={images[index]}
+          src={images[index]}
+          alt={`${title} — image ${index + 1}`}
+          loading="lazy"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.35 }}
+          className="max-h-105 max-w-full w-auto h-auto object-contain contrast-[1.03]"
+        />
+      </AnimatePresence>
+
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={(e) => go(-1, e)}
+            aria-label="Previous image"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-black/50 text-ink hover:bg-black/70 transition-colors"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button
+            onClick={(e) => go(1, e)}
+            aria-label="Next image"
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-black/50 text-ink hover:bg-black/70 transition-colors"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIndex(i);
+                }}
+                aria-label={`Go to image ${i + 1}`}
+                className="w-1.5 h-1.5 rounded-full transition-colors"
+                style={{ background: i === index ? "rgba(243,239,230,0.9)" : "rgba(243,239,230,0.3)" }}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
 
-function MilestoneFigure({ image, title }: { image?: string; title: string }) {
-  if (image) {
-    return (
-      <div className="relative w-full aspect-[4/3] overflow-hidden border-b" style={{ borderColor: "rgba(243,239,230,0.12)" }}>
-        <img
-          src={image}
-          alt={title}
-          loading="lazy"
-          className="w-full h-full object-cover grayscale-[15%] contrast-[1.03] transition-transform duration-500 group-hover:scale-[1.04]"
-        />
-      </div>
-    );
-  }
+function PlaceholderPane() {
   return (
-    <div
-      className="relative w-full aspect-[4/3] border-b flex items-center justify-center"
-      style={{ borderColor: "rgba(243,239,230,0.12)", background: "rgba(243,239,230,0.02)" }}
-    >
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+    <div className="flex items-center justify-center min-h-70 border border-[rgba(243,239,230,0.1)] bg-[rgba(243,239,230,0.02)]">
+      <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
         <rect x="1" y="1" width="26" height="26" rx="2" stroke="rgba(243,239,230,0.2)" strokeWidth="1" />
         <path d="M7 19 L11 13 L15 17 L21 9" stroke="rgba(243,239,230,0.2)" strokeWidth="1" fill="none" />
       </svg>
     </div>
+  );
+}
+
+function AchievementAction({ href, external, label }: { href: string; external: boolean; label: string }) {
+  const className =
+    "inline-flex items-center gap-2 self-start rounded-full border border-[rgba(243,239,230,0.12)] bg-[rgba(243,239,230,0.03)] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim transition-colors hover:border-accent/40 hover:text-accent hover:bg-[rgba(47,214,167,0.06)]";
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+        <span>{label}</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className}>
+      <span>{label}</span>
+      <span aria-hidden="true">→</span>
+    </Link>
   );
 }
 
@@ -90,38 +162,57 @@ export default function Achievements() {
           Achievements — 08
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-20 pt-4">
-          {milestones.map((m, i) => (
-            <motion.div
-              key={m.title}
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: (i % 4) * 0.1 }}
-              style={{ rotate: m.rotate, borderColor: "rgba(243,239,230,0.12)" }}
-              whileHover={{ rotate: 0, y: -6 }}
-              className="group relative bg-bg-raised border flex flex-col overflow-hidden"
-            >
-              <MilestonePin rotate={m.rotate} />
+        <div className="flex flex-col gap-20 md:gap-28">
+          {milestones.map((m, i) => {
+            const reversed = i % 2 === 1;
+            const hasImages = m.images && m.images.length > 0;
+            const hasExternalLink = Boolean(m.link && m.link !== "#");
+            const actionHref = hasExternalLink ? m.link! : "/coming-soon";
+            const actionLabel = hasExternalLink ? "Visit credential" : "Coming soon";
+            return (
+              <motion.div
+                key={m.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6 }}
+                className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center ${
+                  reversed ? "md:[&>*:first-child]:order-2" : ""
+                }`}
+              >
+                {/* Text side */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="font-mono text-[11px] text-accent uppercase tracking-widest">
+                      {String(i + 1).padStart(2, "0")}
+                    </p>
+                    {m.date && (
+                      <p className="font-mono text-[11px] text-ink-faint uppercase tracking-widest">
+                        {m.date}
+                      </p>
+                    )}
+                  </div>
 
-              <MilestoneFigure image={m.image} title={m.title} />
+                  <h3 className="font-display text-2xl md:text-3xl text-ink tracking-tight leading-snug">
+                    {m.title}
+                  </h3>
 
-              <div className="p-6 flex flex-col gap-3">
-                <p className="font-mono text-[11px] text-accent uppercase tracking-widest">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <h3 className="font-display text-lg md:text-xl text-ink tracking-tight leading-snug">
-                  {m.title}
-                </h3>
-                <p className="text-xs text-ink-faint uppercase tracking-wide">
-                  {m.place}
-                </p>
-                <p className="text-ink-dim text-sm leading-relaxed">
-                  {m.note}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+                  <p className="text-xs text-ink-faint uppercase tracking-wide">
+                    {m.place}
+                  </p>
+
+                  <AchievementAction href={actionHref} external={hasExternalLink} label={actionLabel} />
+
+                  <p className="text-ink-dim text-sm md:text-base leading-relaxed max-w-md">
+                    {m.note}
+                  </p>
+                </div>
+
+                {/* Image side */}
+                {hasImages ? <ImagePane images={m.images!} title={m.title} /> : <PlaceholderPane />}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

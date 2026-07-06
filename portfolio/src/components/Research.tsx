@@ -4,28 +4,16 @@ import { motion } from "framer-motion";
 
 const papers = [
   {
-    title: "AI-Driven Brain Tumor Segmentation: A Review",
+    title: "A Comprehensive Review of Artificial Intelligence-Driven Methods for Brain Tumor Segmentation",
     venue: "MBCC 2026, IIT Mandi",
-    authors: "Chinmay · Kush Vaidya · Deval Bhavsar",
-    note: "Guided by Dr. Santosh Satapathy",
     abstract:
-      "A survey of deep learning approaches to brain tumor segmentation, tracing the progression from support vector machines through convolutional networks to U-Net and transformer-based architectures.",
+      "Diagnosis of brain tumors using MRI scans is currently a very tedious and error-prone manual process, which is why this study evaluates how artificial intelligence has been transforming this process. The paper examines the development of the technologies that were used for this purpose in the past, ranging from support vector machines to convolutional neural networks and U-Net, and compares their performance on the task of detecting and segmenting the tumors on the images. The idea was to produce a clear map of the current state of the art in the field.",
   },
   {
-    title: "Sleep Stage Classification from Wrist-Worn Wearables",
-    venue: "MESA Dataset · Ongoing",
-    authors: "Chinmay",
-    note: "CNN-LSTM baseline vs. SleepTransformer",
+    title: "AI-Aided Predictive Maintenance in Automotive Systems — A Comparative Review",
+    venue: "MVAI Conference, SVNIT",
     abstract:
-      "A comparative study of a CNN-LSTM baseline against a custom transformer architecture for 4-class sleep stage prediction, using actigraphy and heart rate signals. Includes a full pipeline from multimodal signal acquisition through explainability and clinical validation.",
-  },
-  {
-    title: "AI-Driven Predictive Maintenance in Automotive Systems",
-    venue: "Conference Submission",
-    authors: "Chinmay",
-    note: "Decision Trees · SVM · Random Forest · K-Means · Autoencoders",
-    abstract:
-      "A benchmarking study comparing five machine learning approaches for predicting automotive component failure ahead of occurrence, spanning supervised and unsupervised methods.",
+      "The cars produce data from sensors on an ongoing basis, yet maintenance is done based on regular intervals irrespective of any failure happening in the vehicle. This research paper analyses how artificial intelligence and machine learning techniques are used to make a change in the situation and predict failures before it occurs. The five different machine learning techniques – decision tree, SVM, random forest, K-means clustering, and autoencoder are analysed on actual applications related to automotive industry, comparing pros and cons of each approach.",
   },
 ];
 
@@ -61,8 +49,6 @@ export default function Research() {
                   {p.venue}
                 </p>
               </div>
-              <p className="text-sm text-ink-dim mb-1">{p.authors}</p>
-              <p className="text-xs text-ink-faint italic mb-4">{p.note}</p>
               <p className="text-ink-dim leading-relaxed text-[15px] max-w-2xl">
                 {p.abstract}
               </p>

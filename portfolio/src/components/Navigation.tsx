@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { User, FolderKanban, FlaskConical, Network, Mail } from "lucide-react";
 
@@ -18,12 +18,14 @@ function DockItem({
   Icon,
   isActive,
   mouseX,
+  onActivate,
 }: {
   href: string;
   label: string;
   Icon: typeof User;
   isActive: boolean;
   mouseX: ReturnType<typeof useMotionValue<number>>;
+  onActivate: (href: string) => void;
 }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const [hovered, setHovered] = useState(false);
@@ -66,8 +68,15 @@ function DockItem({
       <motion.a
         ref={ref}
         href={href}
+        data-dock-href={href}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onPointerUp={() => setHovered(false)}
+        onPointerCancel={() => setHovered(false)}
+        onClick={(event) => {
+          event.preventDefault();
+          onActivate(href);
+        }}
         style={{ scale, y }}
         className="flex items-center justify-center w-10 h-10 rounded-full shrink-0"
       >
@@ -92,6 +101,55 @@ export default function Navigation() {
   const lastY = useRef(0);
   const rafId = useRef<number | null>(null);
   const mouseX = useMotionValue(Infinity);
+  const pointerState = useRef({ active: false, lastHref: "" });
+
+  const scrollToHref = (href: string) => {
+    const section = document.querySelector(href) as HTMLElement | null;
+    if (!section) return;
+
+    setActive(href);
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleDockPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse") return;
+
+    pointerState.current.active = true;
+    pointerState.current.lastHref = "";
+    mouseX.set(event.clientX);
+
+    const target = document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null;
+    const link = target?.closest("a[data-dock-href]") as HTMLAnchorElement | null;
+    const href = link?.dataset.dockHref;
+
+    if (href) {
+      pointerState.current.lastHref = href;
+      scrollToHref(href);
+    }
+  };
+
+  const handleDockPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    mouseX.set(event.clientX);
+
+    if (event.pointerType === "mouse" || !pointerState.current.active) {
+      return;
+    }
+
+    const target = document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null;
+    const link = target?.closest("a[data-dock-href]") as HTMLAnchorElement | null;
+    const href = link?.dataset.dockHref;
+
+    if (href && href !== pointerState.current.lastHref) {
+      pointerState.current.lastHref = href;
+      scrollToHref(href);
+    }
+  };
+
+  const resetDockPointerState = () => {
+    pointerState.current.active = false;
+    pointerState.current.lastHref = "";
+    mouseX.set(Infinity);
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -137,9 +195,15 @@ export default function Navigation() {
     >
       <div
         onMouseMove={(e) => mouseX.set(e.clientX)}
-        onMouseLeave={() => mouseX.set(Infinity)}
+        onMouseLeave={resetDockPointerState}
+        onPointerDown={handleDockPointerDown}
+        onPointerMove={handleDockPointerMove}
+        onPointerUp={resetDockPointerState}
+        onPointerCancel={resetDockPointerState}
+        onLostPointerCapture={resetDockPointerState}
         className="flex items-end gap-1 rounded-full px-3 py-2.5 border"
         style={{
+          touchAction: "none",
           background: "rgba(15, 19, 18, 0.55)",
           backdropFilter: "blur(16px) saturate(140%)",
           WebkitBackdropFilter: "blur(16px) saturate(140%)",
@@ -154,6 +218,7 @@ export default function Navigation() {
             Icon={l.icon}
             isActive={active === l.href}
             mouseX={mouseX}
+            onActivate={scrollToHref}
           />
         ))}
       </div>

@@ -142,23 +142,11 @@ function WorkspaceBackground() {
       </svg>
 
       {/* coordinate markers, top-left / bottom-right, like a drafting sheet */}
-      <div className="absolute top-6 left-6 font-mono text-[10px] text-ink-dim/40 tracking-widest hidden md:block">
-        x:0 y:0
-      </div>
-      <div className="absolute bottom-6 right-6 font-mono text-[10px] text-ink-dim/40 tracking-widest hidden md:block">
-        v2026.1
-      </div>
+      
+      
 
       {/* research-in-progress indicator */}
-      <div className="absolute top-6 right-6 hidden md:flex items-center gap-2 font-mono text-[10px] text-ink-dim/50 tracking-widest">
-        <motion.span
-          className="w-1.5 h-1.5 rounded-full"
-          style={{ backgroundColor: ACCENT }}
-          animate={{ opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-        />
-        research in progress
-      </div>
+      
 
       {/* drifting connection nodes */}
       {[
@@ -838,14 +826,7 @@ export default function Hero() {
         style={{ opacity: textOpacity, y: textY }}
         className="relative z-10 h-[100svh] flex flex-col items-center justify-center text-center max-w-2xl mx-auto"
       >
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="font-mono text-xs text-accent tracking-[0.2em] uppercase mb-8"
-        >
-          the workspace
-        </motion.p>
+        
 
         <motion.h1
           initial={{ opacity: 0, y: 16 }}

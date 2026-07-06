@@ -7,12 +7,14 @@ import Projects from "@/components/Projects";
 import Research from "@/components/Research";
 import Skills from "@/components/Skills";
 import Achievements from "@/components/Achievements";
-import Certificates from "@/components/Certificates";
 import Contact from "@/components/Contact";
+import Preloader from "@/components/Preloader";
+import CustomCursor from "@/components/CustomCursor";
 
 export default function Home() {
   return (
     <main>
+      <Preloader />
       <Navigation />
       <Hero />
       <About />
@@ -22,8 +24,8 @@ export default function Home() {
       <Research />
       <Skills />
       <Achievements />
-      <Certificates />
       <Contact />
+      <CustomCursor />
     </main>
   );
 }

@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import CustomCursor from "@/components/CustomCursor";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "chinmay — build. research. engineer.",
+  title: "Chinmay Singh",
   description:
     "AI engineer, frontend developer, and enterprise product builder. M.Tech AI candidate researching sleep-stage classification, medical imaging, and applied machine learning.",
+  icons: {
+    icon: "/images/cslogo.png",
+  },
 };
 
 export default function RootLayout({
@@ -26,7 +31,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="grain">{children}</body>
+      <body className="grain">
+        <SmoothScroll />
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   );
 }

@@ -5,98 +5,117 @@ import { motion } from "framer-motion";
 const projects = [
   {
     index: "01",
-    title: "SleepTransformer",
-    subtitle: "4-class sleep stage classification from wearable data",
-    stack: ["PyTorch", "MESA Dataset", "Transformers", "CNN-LSTM"],
+    title: "Jewellery CRM Software",
+    // subtitle: "End-to-end CRM built for the jewellery industry",
+    stack: ["React.js", "REST APIs", "JWT Auth", "UI/UX"],
     detail:
-      "A research pipeline that takes raw wrist-worn actigraphy and heart-rate signals through preprocessing, a CNN-LSTM baseline, and a custom transformer architecture — benchmarked end to end for sleep stage prediction. The transformer beat the baseline by a wide margin; the open work now is taming overfitting and class imbalance across sleep stages.",
-    visual: "wave",
+      "Researched jewellery industry workflows and client requirements to lay the foundation for a tailored CRM solution. Led frontend development in React.js, building dynamic forms, dashboards, and interactive tables, and collaborated closely with clients and backend developers to translate real-world needs into intuitive, functional modules.",
+    visual: "dashboard",
+    link: "https://app.notion.com/p/Jewellery-CRM-Software-2b0b1f8b2b6e80bcbcc6d8762809a90b",
   },
   {
     index: "02",
-    title: "Predictive Maintenance for Automotive Systems",
-    subtitle: "Comparative ML study for failure prediction",
-    stack: ["Decision Trees", "SVM", "Random Forest", "K-Means", "Autoencoders"],
+    title: "CarXpert",
+    // subtitle: "Progressive web app for automotive care & detailing",
+    stack: ["React.js", "Tailwind CSS", "PWA", "Vercel"],
     detail:
-      "A comparative study of classical and unsupervised methods for predicting automotive system failures ahead of time — built out as a full research paper with model benchmarking across five distinct approaches, from decision trees to autoencoder-based anomaly detection.",
-    visual: "grid",
-  },
-  {
-    index: "03",
-    title: "This Portfolio",
-    subtitle: "An editorial, non-dashboard personal site",
-    stack: ["Next.js", "TypeScript", "Tailwind v4", "Framer Motion"],
-    detail:
-      "Built deliberately against the template: no cards, no bento grids, no dashboard patterns. Every section carries its own layout logic, from a scroll-driven experience log to a constellation of skills — an attempt to make a portfolio feel handcrafted rather than generated.",
-    visual: "lines",
+      "A sleek, modern Progressive Web App for automotive care and detailing services, emphasizing seamless navigation and a visually appealing interface. Built responsive design end to end, including a full service-booking system and a powerful admin dashboard for managing bookings and contact form submissions.",
+    visual: "road",
+    link: "https://car-xpert.vercel.app/",
   },
 ];
 
+function ProjectAction({ href }: { href: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 self-start rounded-full border border-[rgba(243,239,230,0.12)] bg-[rgba(243,239,230,0.03)] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim transition-colors hover:border-accent/40 hover:text-accent hover:bg-[rgba(47,214,167,0.06)]"
+    >
+      <span>Visit project</span>
+      <span aria-hidden="true">↗</span>
+    </a>
+  );
+}
+
 function Visual({ type }: { type: string }) {
-  if (type === "wave") {
+  if (type === "dashboard") {
     return (
       <svg viewBox="0 0 400 200" className="w-full h-full">
-        <motion.path
-          d="M0,100 C40,40 80,160 120,100 C160,40 200,160 240,100 C280,40 320,160 360,100 L400,100"
-          fill="none"
-          stroke="#2fd6a7"
-          strokeWidth="1.5"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.6, ease: "easeInOut" }}
+        {/* sidebar */}
+        <motion.rect
+          x="10" y="10" width="50" height="180" rx="3"
+          fill="none" stroke="#3a423e" strokeWidth="1"
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
         />
-        <motion.path
-          d="M0,120 C40,90 80,150 120,120 C160,90 200,150 240,120 C280,90 320,150 360,120 L400,120"
-          fill="none"
-          stroke="#5c655f"
-          strokeWidth="1"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.8, delay: 0.2, ease: "easeInOut" }}
-        />
+        {Array.from({ length: 4 }).map((_, i) => (
+          <motion.rect
+            key={`nav-${i}`}
+            x="20" y={30 + i * 30} width="30" height="6" rx="2"
+            fill={i === 0 ? "#2fd6a7" : "#3a423e"}
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 + i * 0.05 }}
+          />
+        ))}
+        {/* top stat cards */}
+        {Array.from({ length: 3 }).map((_, i) => (
+          <motion.rect
+            key={`card-${i}`}
+            x={80 + i * 100} y="20" width="85" height="45" rx="3"
+            fill="none" stroke={i === 0 ? "#2fd6a7" : "#3a423e"} strokeWidth="1"
+            initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
+          />
+        ))}
+        {/* table rows */}
+        {Array.from({ length: 5 }).map((_, i) => (
+          <motion.line
+            key={`row-${i}`}
+            x1="80" y1={90 + i * 20} x2="380" y2={90 + i * 20}
+            stroke="#3a423e" strokeWidth="1"
+            initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 + i * 0.06 }}
+          />
+        ))}
       </svg>
     );
   }
-  if (type === "grid") {
-    return (
-      <svg viewBox="0 0 400 200" className="w-full h-full">
-        {Array.from({ length: 6 }).map((_, r) =>
-          Array.from({ length: 10 }).map((_, c) => (
-            <motion.circle
-              key={`${r}-${c}`}
-              cx={20 + c * 38}
-              cy={20 + r * 32}
-              r={2}
-              fill={(r + c) % 5 === 0 ? "#2fd6a7" : "#3a423e"}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: (r * 10 + c) * 0.01 }}
-            />
-          ))
-        )}
-      </svg>
-    );
-  }
+
+  // road / automotive visual
   return (
     <svg viewBox="0 0 400 200" className="w-full h-full">
-      {Array.from({ length: 5 }).map((_, i) => (
+      {/* road */}
+      <motion.line
+        x1="0" y1="150" x2="400" y2="150"
+        stroke="#3a423e" strokeWidth="1.5"
+        initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }}
+        transition={{ duration: 1, ease: "easeInOut" }}
+      />
+      {/* lane dashes */}
+      {Array.from({ length: 8 }).map((_, i) => (
         <motion.line
           key={i}
-          x1={0}
-          y1={40 + i * 32}
-          x2={400}
-          y2={40 + i * 32}
-          stroke={i === 2 ? "#2fd6a7" : "#3a423e"}
-          strokeWidth={i === 2 ? 1.5 : 1}
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: i * 0.1 }}
+          x1={10 + i * 50} y1="150" x2={35 + i * 50} y2="150"
+          stroke="#2fd6a7" strokeWidth="2"
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          transition={{ duration: 0.3, delay: 0.5 + i * 0.05 }}
         />
       ))}
+      {/* simple car silhouette */}
+      <motion.path
+        d="M60,130 L90,130 L100,110 L150,110 L165,130 L200,130 L200,140 L60,140 Z"
+        fill="none" stroke="#2fd6a7" strokeWidth="1.5"
+        initial={{ pathLength: 0, opacity: 0 }}
+        whileInView={{ pathLength: 1, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+      />
+      <motion.circle cx="85" cy="140" r="8" fill="none" stroke="#5c655f" strokeWidth="1.5"
+        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.8 }} />
+      <motion.circle cx="175" cy="140" r="8" fill="none" stroke="#5c655f" strokeWidth="1.5"
+        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.85 }} />
     </svg>
   );
 }
@@ -128,11 +147,11 @@ export default function Projects() {
                 <h3 className="font-display text-3xl md:text-5xl tracking-tight text-ink mt-4 mb-3">
                   {p.title}
                 </h3>
-                <p className="text-accent text-sm mb-6">{p.subtitle}</p>
+                {/* <p className="text-accent text-sm mb-6">{p.subtitle}</p> */}
                 <p className="text-ink-dim leading-relaxed text-[15px] max-w-lg mb-6">
                   {p.detail}
                 </p>
-                <div className="flex flex-wrap gap-x-4 gap-y-2">
+                <div className="flex flex-wrap gap-x-4 gap-y-2 mb-6">
                   {p.stack.map((s) => (
                     <span
                       key={s}
@@ -142,6 +161,8 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
+
+                <ProjectAction href={p.link} />
               </div>
               <div className="aspect-[4/2.2] w-full">
                 <Visual type={p.visual} />
