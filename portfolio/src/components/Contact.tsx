@@ -46,7 +46,7 @@ export default function Contact() {
           <a href="https://github.com/chinmaysinghh" className="text-ink-dim hover:text-accent transition-colors">
             GitHub
           </a>
-          <a href="https://drive.google.com/file/d/1Fp78iqn3wAXDE9kXPpPe1GaWFe_UMDNC/view?usp=drive_link" className="text-ink-dim hover:text-accent transition-colors">
+          <a href="https://drive.google.com/file/d/1YMGL6zm-g5WYUBCBiM6DCAEjuCpmwywr/view?usp=sharing" className="text-ink-dim hover:text-accent transition-colors">
             Resume
           </a>
         </motion.div>
