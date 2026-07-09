@@ -2,14 +2,21 @@
 
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { User, FolderKanban, FlaskConical, Network, Mail } from "lucide-react";
+import { User, FolderKanban, FlaskConical, Network, Mail, FileText, CalendarClock } from "lucide-react";
+
+const RESUME_URL =
+  "https://drive.google.com/file/d/1YMGL6zm-g5WYUBCBiM6DCAEjuCpmwywr/view?usp=sharing";
+
+const MEETING_URL = "https://cal.com/chinmay-singh/30min";
 
 const links = [
-  { href: "#about", label: "about", icon: User },
-  { href: "#projects", label: "projects", icon: FolderKanban },
-  { href: "#research", label: "research", icon: FlaskConical },
-  { href: "#skills", label: "skills", icon: Network },
-  { href: "#contact", label: "contact", icon: Mail },
+  { href: "#about", label: "about", icon: User, external: false },
+  { href: "#projects", label: "projects", icon: FolderKanban, external: false },
+  { href: "#research", label: "research", icon: FlaskConical, external: false },
+  { href: "#skills", label: "skills", icon: Network, external: false },
+  { href: "#contact", label: "contact", icon: Mail, external: false },
+  { href: MEETING_URL, label: "schedule a call", icon: CalendarClock, external: true },
+  { href: RESUME_URL, label: "resume", icon: FileText, external: true },
 ];
 
 function DockItem({
@@ -105,7 +112,15 @@ export default function Navigation() {
   const mouseX = useMotionValue(Infinity);
   const pointerState = useRef({ active: false, lastHref: "" });
 
+  const isExternalHref = (href: string) =>
+    links.find((l) => l.href === href)?.external ?? false;
+
   const scrollToHref = (href: string) => {
+    if (isExternalHref(href)) {
+      window.open(href, "_blank", "noopener,noreferrer");
+      return;
+    }
+
     const section = document.querySelector(href) as HTMLElement | null;
     if (!section) return;
 
@@ -126,7 +141,10 @@ export default function Navigation() {
 
     if (href) {
       pointerState.current.lastHref = href;
-      scrollToHref(href);
+      // Don't auto-trigger external links on touchstart; wait for a real tap (pointerup)
+      if (!isExternalHref(href)) {
+        scrollToHref(href);
+      }
     }
   };
 
@@ -142,8 +160,22 @@ export default function Navigation() {
 
     if (href && href !== pointerState.current.lastHref) {
       pointerState.current.lastHref = href;
-      scrollToHref(href);
+      if (!isExternalHref(href)) {
+        scrollToHref(href);
+      }
     }
+  };
+
+  const handleDockPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse" && pointerState.current.active) {
+      const target = document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null;
+      const link = target?.closest("a[data-dock-href]") as HTMLAnchorElement | null;
+      const href = link?.dataset.dockHref;
+      if (href && isExternalHref(href)) {
+        scrollToHref(href);
+      }
+    }
+    resetDockPointerState();
   };
 
   const resetDockPointerState = () => {
@@ -163,7 +195,9 @@ export default function Navigation() {
         setHidden(y > lastY.current && y > 200);
         lastY.current = y;
 
-        const sections = links.map((l) => document.querySelector(l.href));
+        const sections = links
+          .filter((l) => !l.external)
+          .map((l) => document.querySelector(l.href));
         let current = "";
 
         sections.forEach((sec) => {
@@ -198,7 +232,7 @@ export default function Navigation() {
         onPointerLeave={resetDockPointerState}
         onPointerDown={handleDockPointerDown}
         onPointerMove={handleDockPointerMove}
-        onPointerUp={resetDockPointerState}
+        onPointerUp={handleDockPointerUp}
         onPointerCancel={resetDockPointerState}
         onLostPointerCapture={resetDockPointerState}
         className="flex items-end gap-1 rounded-full px-3 py-2.5 border"

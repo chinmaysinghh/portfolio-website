@@ -10,6 +10,8 @@ import Achievements from "@/components/Achievements";
 import Contact from "@/components/Contact";
 import Preloader from "@/components/Preloader";
 import CustomCursor from "@/components/CustomCursor";
+import Footer from "@/components/Footer";
+import ScheduleMeeting from "@/components/ScheduleMeeting";
 
 export default function Home() {
   return (
@@ -26,6 +28,8 @@ export default function Home() {
       <Achievements />
       <Contact />
       <CustomCursor />
+      <Footer />
+      
     </main>
   );
 }
