@@ -18,6 +18,7 @@ const milestones: Milestone[] = [
     title: "Presented at MBCC 2026",
     place: "IIT Mandi",
     date: "June 2026",
+    link: "https://drive.google.com/file/d/1u1lxtiGlpG8e_PW5AHTtnLytefCGC5vP/view?usp=drive_link",
     note: "Delivered a review paper on AI-driven brain tumor segmentation to a national research audience.",
     images: ["/images/chinmay-iitmandi.jpg"],
   },
@@ -50,7 +51,7 @@ const milestones: Milestone[] = [
     place: "SVNIT, Surat",
     date: "September 2026",
     note: "A comparative review of AI and ML techniques including K-Means clustering, KNN, and autoencoders  for predictive maintenance and fault detection in automotive systems. Accepted for presentation.",
-    images: ["/images/chinmay-svnit-paper.png"], // TODO: add image path(s) once you have a photo/screenshot for this
+    images: ["/images/chinmay_svnit.jpeg"], // TODO: add image path(s) once you have a photo/screenshot for this
   },
 ];
 
@@ -168,7 +169,7 @@ export default function Achievements() {
             const hasImages = m.images && m.images.length > 0;
             const hasExternalLink = Boolean(m.link && m.link !== "#");
             const actionHref = hasExternalLink ? m.link! : "/coming-soon";
-            const actionLabel = hasExternalLink ? "Visit credential" : "Coming soon";
+            const actionLabel = hasExternalLink ? "Visit credentials" : "Coming soon";
             return (
               <motion.div
                 key={m.title}
@@ -176,9 +177,8 @@ export default function Achievements() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.6 }}
-                className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center ${
-                  reversed ? "md:[&>*:first-child]:order-2" : ""
-                }`}
+                className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center ${reversed ? "md:[&>*:first-child]:order-2" : ""
+                  }`}
               >
                 {/* Text side */}
                 <div className="flex flex-col gap-3">
